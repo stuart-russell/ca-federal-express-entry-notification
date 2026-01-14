@@ -1,0 +1,30 @@
+version: 2.1
+
+image: &image
+  - image: oven/bun:latest
+    environment:
+      ntfyName: $ntfyName
+      statusPageUrl: $statusPageUrl
+
+jobs:
+  check-draw:
+    docker: *image
+    steps:
+      - checkout
+      - run: bun install
+      - run: bun test
+      - run: bunx playwright install chromium
+      - run: bun run index.ts
+      - run: git add last-draw-data.json
+      - run: git commit -m "updating most recent draw data"
+      - run: git push
+
+workflows:
+  version: 2
+  check-draw:
+    when:
+      and:
+        - equal: [scheduled_pipeline, << pipeline.trigger_source >>]
+        - equal: ["check-draw", << pipeline.schedule.name >>]
+    jobs:
+      - check-draw

@@ -1,0 +1,21 @@
+{
+  "name": "ca-federal-express-entry-notification",
+  "module": "index.ts",
+  "scripts": {
+    "start": "bun run index.ts",
+    "scrape": "bun run run-now.ts",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "fast-check": "^4.5.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.57.0"
+  }
+}
