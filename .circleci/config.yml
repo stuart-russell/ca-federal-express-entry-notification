@@ -18,9 +18,17 @@ jobs:
       - run: bunx playwright install --with-deps
       - run: bunx playwright install chromium
       - run: bun run index.ts
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+      
   push-new-data:
     docker: *git-image
     steps:
+      - attach_workspace:
+          at: ~/
       - run: git add last-draw-data.json
       - run: git commit -m "updating most recent draw data"
       - run: git push
