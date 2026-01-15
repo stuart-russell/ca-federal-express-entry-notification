@@ -34,12 +34,12 @@ workflows:
         - equal: ["check-draw", << pipeline.schedule.name >>]
     jobs:
       - check-draw
-      - push-new-data
-        requires:
-          - check-draw
+      - push-new-data:
+          requires:
+            - check-draw
   push:
     jobs:
       - check-draw
-      - push-new-data
-        requires:
-          - check-draw
+      - push-new-data:
+          requires:
+            - check-draw
