@@ -5,8 +5,6 @@ bun-image: &bun-image
     environment:
       ntfyName: $ntfyName
       statusPageUrl: $statusPageUrl
-git-image: &git-image
-  - image: alpine/git:latest
 
 jobs:
   check-draw:
@@ -18,22 +16,6 @@ jobs:
       - run: bunx playwright install --with-deps
       - run: bunx playwright install chromium
       - run: bun run index.ts
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
-      
-  push-new-data:
-    docker: *git-image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: git config --global user.email "stuart.russell@protonmail.com"
-      - run: git config --global user.name "Stuart Russell"
-      - run: git add last-draw-data.json
-      - run: git commit -m "updating most recent draw data"
-      - run: git push
 
 workflows:
   version: 2
@@ -44,12 +26,3 @@ workflows:
         - equal: ["check-draw", << pipeline.schedule.name >>]
     jobs:
       - check-draw
-      - push-new-data:
-          requires:
-            - check-draw
-  push:
-    jobs:
-      - check-draw
-      - push-new-data:
-          requires:
-            - check-draw
