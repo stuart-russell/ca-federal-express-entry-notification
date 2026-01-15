@@ -29,6 +29,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
+      - run: git config --global user.email "stuart.russell@protonmail.com"
+      - run: git config --global user.name "Stuart Russell"
       - run: git add last-draw-data.json
       - run: git commit -m "updating most recent draw data"
       - run: git push
