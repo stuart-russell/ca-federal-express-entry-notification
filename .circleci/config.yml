@@ -13,6 +13,7 @@ jobs:
       - checkout
       - run: bun install
       - run: bun test
+      - run: bunx playwright install --with-deps
       - run: bunx playwright install chromium
       - run: bun run index.ts
       - run: git add last-draw-data.json
