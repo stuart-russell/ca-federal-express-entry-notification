@@ -1,7 +1,7 @@
 version: 2.1
 
 image: &image
-  - image: oven/bun:latest
+  - image: mcr.microsoft.com/playwright:v1.57.0-noble
     environment:
       ntfyName: $ntfyName
       statusPageUrl: $statusPageUrl
